@@ -2,8 +2,9 @@
     width: 800px; 
     background-color: #b0cf00e1; 
     border-radius: 10px;
-};
+}
 
 .search-button {
-    background-color: #0F5474;
-};
+    background-color: #0F5474 !important;
+    border-color: #0F5474 !important;
+}
