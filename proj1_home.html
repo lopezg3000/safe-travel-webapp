@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>SafeTravelHome</title>
+    <!--Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--J Query UI-->
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
+
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Navigation Bar-->
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Domestic</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">International</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Creative Resources</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>
+    </ul>
+   
+   
+    
+<style>
+  .nav{
+    align-content: flex-end;
+  }
+  .grid{
+  display: flex;
+  grid-template-rows: auto;
+  }
+  .about{
+  margin-top: 200px;
+  margin-left: 250px;
+  margin-right: 250px;
+  }
+  .container-fluid{
+  margin-bottom: 25%;
+  }
+  h6{
+  text-align: center;
+  }
+
+
+</style>
+</head>
+<body>
+  
+<div class= "grid">
+
+  <!--About us-->
+  <div class = "about">
+    <h6><pre>
+    Safe Travel was developed in 2021 during the Kennesaw State/Digital Crafts Flex June Cohort.
+    A year and a half of quarantines, isolation, mask mandates, illness, vaccinations, lost loved-ones, and
+    a looming researgence of Covid cases due to the Delta Variant, began to take a tole on the mental wellness of
+    society and made the future seem bleak.
+    
+    It became more important than ever to have infusions of joyous and happy experiences and since travel provides that
+    infusion for many people, Gabrielle, Julia, and Carmen wanted to help people experience joy by helping them
+    make informed travel decisions. Thus "Safe Travel" was created. The purpose of this site is to provide
+    location specific details about travel restrictions, vaccination rates, covid cases, and more.
+    
+    If you are considering travel, enter your e-mail address below. Then search
+    for your domestic or international location to find out more information.
+
+    If you aren't quite ready to travel yet, visit the Creative Resources tab for virtual experiences.
+
+   
+  </pre></h6>
+
+  <!--E-mail Address Input-->
+  <div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+    </div>
+  </div>
+
+  <!--Search Bar-->
+  <div class="container-fluid">
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+  <div>
+    
+
+
+
+  </div>
+
+  
+
+
+</div>
+  
+
+
+    
+</body>
+<!--Bootstrap Bundle-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!--Call to get picture-->
+<script>
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+      if(request.readyState ==4 && request.status ==200){
+      console.log(this);
+      };
+    }
+    request.open("GET","https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases2_v1/FeatureServer/2/query?where=1%3D1&outFields=*&outSR=4326&f=json");
+    request.send();  
+</script>
+<script>
+    function display(apiResponse){
+      const jsonFormat = JSON.parse(apiResponse);//parse into json//
+      createGridDivs(jsonFormat);
+    }
+    function createGridDivs(jsonData){
+      let gridDiv =document.getElementById("gridDiv");
+        const totalCountries =jsonData.length;
+          for(let i=0; i<totalCountries; i++){
+
+            const idDiv =document.createElement("div");
+            UIDDiv.innterHTML = jsonData[i]["UID"];   //gives access to the element i//
+            gridDiv.appendChild(UIDDiv);
+          }
+    }
+<script> moment().format("MMM Do YY");</script>
+
+</script>
+</html>
