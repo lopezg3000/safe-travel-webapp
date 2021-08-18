@@ -31,12 +31,15 @@
 
                     <div class="col-4">
                         <button id='search-button' class="btn btn-primary mb-3 search-button"
-                            onclick="getDestinationData()">Search</button>
+                            onclick="loadInternationalData(`${covidUrl}`)">Search</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <div class="data-grid-container">
+        <div id='globalid'></div>
+    </div>
     <script src='./index.js'></script>
 </body>
 
