@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <style>
+        .mainDiv {
+            width: 80%;
+            margin: 2rem;
+        }
+        .data-grid-container {
+            display: grid;                
+            grid-template-columns: auto;
+        }
+        img {
+            width: 80%;
+            height: 80%;
+        }
+        .data-grid-container > div {
+            font-size: 1rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding: .2em;
+            margin: 10px;
+            border-radius: 12px;
+            border: solid 1px black;
+        }            
+        </style>
+        <script>
+            const covidUrl = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
+
+            loadInternationalData = function(url) {
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function() {
+                    let response = this.response;
+                    if (request.status == 200) {
+                        displayInternationalData(JSON.parse(request.responseText), 'globalid');
+                    }
+                };
+                request.open('GET', url);
+                request.send();
+            }
+
+            function displayInternationalData(apiResponse, divid) {
+                let gridDiv         = document.getElementById(divid);
+                gridDiv.innerHTML   = '';
+                const totalCountries   = apiResponse.length;
+                console.log("Total countries", totalCountries);
+
+                for(let i=0;i<totalCountries;i++){
+                    console.log(totalCountries);
+                    const idDivTag    = document.createElement("div");
+                    idDivTag.id   = "divId"+i;
+                    idDivTag.innerHTML = apiResponse[i]["country"];
+                    gridDiv.appendChild(idDivTag);
+
+                }
+            } 
+    
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <button onclick="loadInternationalData(`${covidUrl}`)">
+            Load International Data
+            </button>       
+                <div class="data-grid-container">
+                    <div id='globalid'></div>
+                </div>
+        </div>
+    
+    </body>
+</html>
+
