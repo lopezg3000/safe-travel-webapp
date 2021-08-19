@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+    <!-------------------      SEARCH BAR SECTION          ----------------------->
     <section>
         <div class='d-flex flex-row justify-content-center pt-5'>
             <div class='d-flex flex-column p-3 search-bar-wrapper'>
@@ -31,15 +33,18 @@
 
                     <div class="col-4">
                         <button id='search-button' class="btn btn-primary mb-3 search-button"
-                            onclick="loadInternationalData(`${covidUrl}`)">Search</button>
+                            onclick="loadInternationalData()">Search</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <div class="data-grid-container">
-        <div id='globalid'></div>
-    </div>
+
+    <!-----------------------      INTERNATIONAL GRID SECTION           ----------------------------->
+
+    <section id='international-section' class="data-grid-container">
+
+    </section>
     <script src='./index.js'></script>
 </body>
 
