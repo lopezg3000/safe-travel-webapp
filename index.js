@@ -1,3 +1,4 @@
+let fakeData = ['Mexico', 'Canada', 'USA', 'Africa'];
 
 //FUNCTION ALLOWS YOU TO PRESS ENTER AND SEARCH RESULTS
 
@@ -6,9 +7,18 @@ let destinationInputField = document.getElementById('destination');
 
 destinationInputField.addEventListener('keyup', function (e) {
     e.preventDefault();
-    if (e.keyCode === 13) {
+    if (e.target.keyCode === 13) {
         // console.log('enter key pressed');
         document.getElementById('search-button').click()
+    } else {
+
+        //FILTERS DATA BASED ON SEARCH INPUT
+        let value = e.target.value;
+
+        let searchResults = fakeData.filter(country =>
+            country.toLowerCase().includes(value)
+        );
+        console.log(searchResults);
     }
 });
 
@@ -26,7 +36,7 @@ loadInternationalData = function () {
     };
     request.open('GET', 'https://disease.sh/v3/covid-19/countries/?q=yesterday');
     request.send();
-}
+};
 
 //FUNCTION DISPLAYS COUNTRIES
 
@@ -43,6 +53,7 @@ function displayInternationalData(responseParsed) {
         div.id = "country" + i;
         div.innerHTML = responseParsed[i].country;
         internationalSection.appendChild(div);
-
     }
-}
+};
+
+
