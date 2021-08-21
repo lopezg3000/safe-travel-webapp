@@ -1,4 +1,4 @@
-let fakeData = ['Mexico', 'Canada', 'USA', 'Africa'];
+
 
 //FUNCTION ALLOWS YOU TO PRESS ENTER AND SEARCH RESULTS
 
@@ -9,18 +9,94 @@ destinationInputField.addEventListener('keyup', function (e) {
     e.preventDefault();
     if (e.target.keyCode === 13) {
         // console.log('enter key pressed');
-        document.getElementById('search-button').click()
+        document.getElementById('search-button').click();
     } else {
 
-        //FILTERS DATA BASED ON SEARCH INPUT
         let value = e.target.value;
-
-        let searchResults = fakeData.filter(country =>
-            country.toLowerCase().includes(value)
-        );
-        console.log(searchResults);
+        // console.log(covidData);
+        filterCovidData(value, displayFilterSearchResults);
     }
 });
+
+//FILTERS DATA BASED ON SEARCH INPUT
+function filterCovidData(value, callback) {
+    let searchResults = covidData.filter(object => {
+        // console.log(object.country);
+        let countryString = object.country.toLowerCase();
+        return countryString.includes(value); //might want to do a regex in the future
+    });
+    // console.log(searchResults);
+
+    if (value !== '') {
+        callback(searchResults);
+    } else {
+        //erases results when input field value is an empty string
+        let searchBar = document.getElementById('search-bar');
+        searchBar.innerHTML = '';
+    }
+};
+
+//DISPLAYS FILTERED RESULTS UNDERNEATH SEARCH BAR
+
+function displayFilterSearchResults(searchResults) {
+    let searchBar = document.getElementById('search-bar');
+    searchBar.innerHTML = '';
+
+    searchResults.map(item => {
+
+        let filteredResultsDiv = document.createElement('div');
+        let filteredResultsDivClassesToAdd = ['bg-light', 'p-2', 'm-0'];
+        filteredResultsDiv.classList.add(...filteredResultsDivClassesToAdd); //adds all the classes in the array above
+        searchBar.appendChild(filteredResultsDiv);
+
+        let filteredResults = document.createElement('h5');
+        let filteredResultsClassesToAdd = ['text-muted', 'mb-0'];
+        filteredResults.classList.add(...filteredResultsClassesToAdd); //adds all the classes in the array above
+        filteredResults.innerHTML = item.country;
+        filteredResultsDiv.appendChild(filteredResults);
+    })
+
+    // console.log('displayFilterSearch Results', searchResults);
+
+
+}
+
+
+// FUNCTION CALLS HTTP REQUEST
+
+function getData() {
+    let covidApiEndpoint = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
+
+    httpRequest(covidApiEndpoint, storeData);
+}
+
+//REUSABLE HTTP REQUEST
+
+function httpRequest(url, callback) {
+    let request = new XMLHttpRequest();
+    // console.log('this is the request: ', request)
+
+    request.onreadystatechange = function () {
+        let response = this.response;
+        let responseParsed = JSON.parse(response);
+        // console.log(responseParsed);
+
+        if (request.status == 200 & request.readyState == 4) {
+            callback(responseParsed);
+
+        }
+    };
+    request.open('GET', url);
+    request.send();
+}
+
+let covidData = ''; // global variable that stores covid data
+
+function storeData(responseParsed) {
+    covidData = responseParsed;
+    // console.log(covidData);
+}
+
 
 //FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
 

@@ -17,7 +17,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body onload='getData()'>
 
     <!-------------------      SEARCH BAR SECTION          ----------------------->
     <section>
@@ -29,6 +29,7 @@
                         <label for="destination" class="visually-hidden">Destination</label>
                         <input type="text" class="form-control" id="destination"
                             placeholder="Enter your next destination" value=''>
+                        <div id='search-bar'></div>
                     </div>
 
                     <div class="col-4">
