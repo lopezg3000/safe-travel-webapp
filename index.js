@@ -27,11 +27,38 @@ function filterCovidData(value, callback) {
     });
     // console.log(searchResults);
 
-    callback(searchResults);
+    if (value !== '') {
+        callback(searchResults);
+    } else {
+        //erases results when input field value is an empty string
+        let searchBar = document.getElementById('search-bar');
+        searchBar.innerHTML = '';
+    }
 };
 
+//DISPLAYS FILTERED RESULTS UNDERNEATH SEARCH BAR
+
 function displayFilterSearchResults(searchResults) {
-    console.log('displayFilterSearch Results', searchResults);
+    let searchBar = document.getElementById('search-bar');
+    searchBar.innerHTML = '';
+
+    searchResults.map(item => {
+
+        let filteredResultsDiv = document.createElement('div');
+        let filteredResultsDivClassesToAdd = ['bg-light', 'p-2', 'm-0'];
+        filteredResultsDiv.classList.add(...filteredResultsDivClassesToAdd); //adds all the classes in the array above
+        searchBar.appendChild(filteredResultsDiv);
+
+        let filteredResults = document.createElement('h5');
+        let filteredResultsClassesToAdd = ['text-muted', 'mb-0'];
+        filteredResults.classList.add(...filteredResultsClassesToAdd); //adds all the classes in the array above
+        filteredResults.innerHTML = item.country;
+        filteredResultsDiv.appendChild(filteredResults);
+    })
+
+    // console.log('displayFilterSearch Results', searchResults);
+
+
 }
 
 
