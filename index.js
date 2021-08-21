@@ -22,6 +22,41 @@ destinationInputField.addEventListener('keyup', function (e) {
     }
 });
 
+// FUNCTION CALLS HTTP REQUEST
+
+function getData() {
+    let covidApiEndpoint = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
+
+    httpRequest(covidApiEndpoint, storeData);
+}
+
+//REUSABLE HTTP REQUEST
+
+function httpRequest(url, callback) {
+    let request = new XMLHttpRequest();
+    // console.log('this is the request: ', request)
+
+    request.onreadystatechange = function () {
+        let response = this.response;
+        let responseParsed = JSON.parse(response);
+        // console.log(responseParsed);
+
+        if (request.status == 200 & request.readyState == 4) {
+            callback(responseParsed);
+
+        }
+    };
+    request.open('GET', url);
+    request.send();
+}
+
+let covidData = ''; // global variable that stores covid data
+
+function storeData(responseParsed) {
+    covidData = responseParsed;
+    console.log(covidData);
+}
+
 
 //FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
 
