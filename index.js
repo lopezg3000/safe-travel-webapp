@@ -1,4 +1,4 @@
-let fakeData = ['Mexico', 'Canada', 'USA', 'Africa'];
+
 
 //FUNCTION ALLOWS YOU TO PRESS ENTER AND SEARCH RESULTS
 
@@ -12,15 +12,28 @@ destinationInputField.addEventListener('keyup', function (e) {
         document.getElementById('search-button').click();
     } else {
 
-        //FILTERS DATA BASED ON SEARCH INPUT
         let value = e.target.value;
-
-        let searchResults = fakeData.filter(country =>
-            country.toLowerCase().includes(value)
-        );
-        console.log(searchResults);
+        // console.log(covidData);
+        filterCovidData(value, displayFilterSearchResults);
     }
 });
+
+//FILTERS DATA BASED ON SEARCH INPUT
+function filterCovidData(value, callback) {
+    let searchResults = covidData.filter(object => {
+        // console.log(object.country);
+        let countryString = object.country.toLowerCase();
+        return countryString.includes(value); //might want to do a regex in the future
+    });
+    // console.log(searchResults);
+
+    callback(searchResults);
+};
+
+function displayFilterSearchResults(searchResults) {
+    console.log('displayFilterSearch Results', searchResults);
+}
+
 
 // FUNCTION CALLS HTTP REQUEST
 
@@ -54,7 +67,7 @@ let covidData = ''; // global variable that stores covid data
 
 function storeData(responseParsed) {
     covidData = responseParsed;
-    console.log(covidData);
+    // console.log(covidData);
 }
 
 
