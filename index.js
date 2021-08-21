@@ -1,3 +1,4 @@
+let fakeData = ['Mexico', 'Canada', 'USA', 'Africa'];
 
 //FUNCTION ALLOWS YOU TO PRESS ENTER AND SEARCH RESULTS
 
@@ -6,43 +7,53 @@ let destinationInputField = document.getElementById('destination');
 
 destinationInputField.addEventListener('keyup', function (e) {
     e.preventDefault();
-    if (e.keyCode === 13) {
+    if (e.target.keyCode === 13) {
         // console.log('enter key pressed');
         document.getElementById('search-button').click()
+    } else {
+
+        //FILTERS DATA BASED ON SEARCH INPUT
+        let value = e.target.value;
+
+        let searchResults = fakeData.filter(country =>
+            country.toLowerCase().includes(value)
+        );
+        console.log(searchResults);
     }
 });
 
-// function getDestinationData() {
-//     console.log('hello destination');
-// };
+//FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
 
-
-const covidUrl = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
-
-loadInternationalData = function (url) {
+loadInternationalData = function () {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         let response = this.response;
+        let responseParsed = JSON.parse(response);
+
         if (request.status == 200) {
-            displayInternationalData(JSON.parse(request.responseText), 'globalid');
+            displayInternationalData(responseParsed);
         }
     };
-    request.open('GET', url);
+    request.open('GET', 'https://disease.sh/v3/covid-19/countries/?q=yesterday');
     request.send();
-}
+};
 
-function displayInternationalData(apiResponse, divid) {
-    let gridDiv = document.getElementById(divid);
-    gridDiv.innerHTML = '';
-    const totalCountries = apiResponse.length;
-    console.log("Total countries", totalCountries);
+//FUNCTION DISPLAYS COUNTRIES
 
-    for (let i = 0; i < totalCountries; i++) {
-        console.log(totalCountries);
-        const idDivTag = document.createElement("div");
-        idDivTag.id = "divId" + i;
-        idDivTag.innerHTML = apiResponse[i]["country"];
-        gridDiv.appendChild(idDivTag);
+function displayInternationalData(responseParsed) {
+    let internationalSection = document.getElementById('international-section');
+    internationalSection.innerHTML = '';
 
+    const countriesArrayLength = responseParsed.length;
+    // console.log("Total countries", countriesArrayLength);
+
+    for (let i = 0; i < countriesArrayLength; i++) {
+        // console.log(countriesArrayLength);
+        const div = document.createElement("div");
+        div.id = "country" + i;
+        div.innerHTML = responseParsed[i].country;
+        internationalSection.appendChild(div);
     }
-}
+};
+
+
