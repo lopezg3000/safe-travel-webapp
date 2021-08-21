@@ -1,74 +1,44 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <style>
-        .mainDiv {
-            width: 80%;
-            margin: 2rem;
-        }
-        .data-grid-container {
-            display: grid;                
-            grid-template-columns: auto;
-        }
-        img {
-            width: 80%;
-            height: 80%;
-        }
-        .data-grid-container > div {
-            font-size: 1rem;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            padding: .2em;
-            margin: 10px;
-            border-radius: 12px;
-            border: solid 1px black;
-        }            
-        </style>
-        <script>
-            const covidUrl = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
-
-            loadInternationalData = function(url) {
-                var request = new XMLHttpRequest();
-                request.onreadystatechange = function() {
-                    let response = this.response;
-                    if (request.status == 200) {
-                        displayInternationalData(JSON.parse(request.responseText), 'globalid');
-                    }
-                };
-                request.open('GET', url);
-                request.send();
-            }
-
-            function displayInternationalData(apiResponse, divid) {
-                let gridDiv         = document.getElementById(divid);
-                gridDiv.innerHTML   = '';
-                const totalCountries   = apiResponse.length;
-                console.log("Total countries", totalCountries);
-
-                for(let i=0;i<totalCountries;i++){
-                    console.log(totalCountries);
-                    const idDivTag    = document.createElement("div");
-                    idDivTag.id   = "divId"+i;
-                    idDivTag.innerHTML = apiResponse[i]["country"];
-                    gridDiv.appendChild(idDivTag);
-
-                }
-            } 
-    
-        </script>
-
+    <head> 
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="./bootstrap.css">
+        <!-- <link rel="stylesheet" href="./covid-api.css"> -->
+        <title>Bootstrap Intro</title>
     </head>
 
     <body>
         <div class="container">
-            <button onclick="loadInternationalData(`${covidUrl}`)">
+            <button type="button" class="btn btn-primary btn-sm" onclick="loadInternationalData(`${covidUrl}`)">
             Load International Data
             </button>       
-                <div class="data-grid-container">
-                    <div id='globalid'></div>
+            <div class="container">
+                <div class="card" id="gridDiv" style="width: 18rem;">
+                    <img class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"></p>
+                        <p class="card-text"></p>
+                    </div>
                 </div>
+            </div>
         </div>
-    
+
+        <!-- <div class="card mb-3">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div> -->
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="./covid-api.js"></script>
+
     </body>
+
 </html>
 
