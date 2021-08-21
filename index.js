@@ -7,24 +7,20 @@ let destinationInputField = document.getElementById('destination');
 
 destinationInputField.addEventListener('keyup', function (e) {
     e.preventDefault();
-    if (e.target.keyCode === 13) {
+    if (e.keyCode === 13) {
         // console.log('enter key pressed');
         document.getElementById('search-button').click();
     } else {
 
         let value = e.target.value;
         // console.log(covidData);
-        filterCovidData(value, displayFilterSearchResults);
+        displaySwitch(value, displayFilterSearchResults);
     }
 });
 
-//FILTERS DATA BASED ON SEARCH INPUT
-function filterCovidData(value, callback) {
-    let searchResults = covidData.filter(object => {
-        // console.log(object.country);
-        let countryString = object.country.toLowerCase();
-        return countryString.includes(value); //might want to do a regex in the future
-    });
+//DISPLAY OR NOT FUNCTION
+function displaySwitch(value, callback) {
+    let searchResults = filterCovidData(value);
     // console.log(searchResults);
 
     if (value !== '') {
@@ -36,17 +32,29 @@ function filterCovidData(value, callback) {
     }
 };
 
+//FILTERS DATA BASED ON SEARCH INPUT
+
+function filterCovidData(value) {
+    let searchResults = covidData.filter(object => {
+        // console.log(object.country);
+        let countryString = object.country.toLowerCase();
+        return countryString.includes(value); //might want to do a regex in the future
+    });
+    return searchResults;
+};
+
 //DISPLAYS FILTERED RESULTS UNDERNEATH SEARCH BAR
 
 function displayFilterSearchResults(searchResults) {
     let searchBar = document.getElementById('search-bar');
-    searchBar.innerHTML = '';
+    searchBar.innerHTML = ''; //erase the previous results
 
     searchResults.map(item => {
 
         let filteredResultsDiv = document.createElement('div');
         let filteredResultsDivClassesToAdd = ['bg-light', 'p-2', 'm-0'];
         filteredResultsDiv.classList.add(...filteredResultsDivClassesToAdd); //adds all the classes in the array above
+        filteredResultsDiv.addEventListener('click', function () { handleSearchClick(item); }, false); //click event added dynamically to each search result
         searchBar.appendChild(filteredResultsDiv);
 
         let filteredResults = document.createElement('h5');
@@ -54,13 +62,78 @@ function displayFilterSearchResults(searchResults) {
         filteredResults.classList.add(...filteredResultsClassesToAdd); //adds all the classes in the array above
         filteredResults.innerHTML = item.country;
         filteredResultsDiv.appendChild(filteredResults);
-    })
+    });
 
     // console.log('displayFilterSearch Results', searchResults);
+};
 
+//REPLACES INPUT VALUE TO THE NAME OF THE COUNTRY WHEN CLICKED
+function handleSearchClick(item) {
+    console.log('object: ', item);
+    let destination = document.getElementById('destination');
+    // destination.value = '';
+    destination.value = item.country; //new value for input field
+
+    let searchBar = document.getElementById('search-bar');
+    searchBar.innerHTML = ''; //erase the previous results
+
+    displayCountryCard(item);
+
+};
+
+function displayCountryCard(item) {
+    let internationalSection = document.getElementById('international-section');
+    internationalSection.innerHTML = ''; //erases previous card
+
+    {/* 
+<section>
+<div class="card mb-3">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div> 
+<section
+*/}
+
+    let cardMainDiv = document.createElement('div');
+    let cardMainDivClassesToAdd = ['card', 'mb-3', 'w-25'];
+    cardMainDiv.classList.add(...cardMainDivClassesToAdd); //adds all the classes in the array above
+    cardMainDiv.style = 'margin: 20px auto 0'
+    internationalSection.appendChild(cardMainDiv);
+
+    let imageTag = document.createElement('img');
+    imageTag.src = item.countryInfo.flag;
+    let imageTagClassesToAdd = ['card-img-top'];
+    imageTag.classList.add(...imageTagClassesToAdd); //adds all the classes in the array above
+    cardMainDiv.appendChild(imageTag);
+
+    let cardBodyDiv = document.createElement('div');
+    let cardBodyDivClassesToAdd = ['card-body'];
+    cardBodyDiv.classList.add(...cardBodyDivClassesToAdd); //adds all the classes in the array above
+    cardMainDiv.appendChild(cardBodyDiv);
+
+    let heading = document.createElement('h5');
+    let headingClassesToAdd = ['card-title'];
+    heading.classList.add(...headingClassesToAdd); //adds all the classes in the array above
+    heading.innerHTML = item.country;
+    cardBodyDiv.appendChild(heading);
+
+    let cases = document.createElement('p');
+    let casesClassesToAdd = ['card-text'];
+    cases.classList.add(...casesClassesToAdd); //adds all the classes in the array above
+    cases.innerHTML = `Cases: ${item.cases}`;
+    cardBodyDiv.appendChild(cases);
+
+    let deaths = document.createElement('p');
+    let deathsClassesToAdd = ['card-text'];
+    deaths.classList.add(...deathsClassesToAdd); //adds all the classes in the array above
+    deaths.innerHTML = `Deaths: ${item.deaths}`;
+    cardBodyDiv.appendChild(deaths);
 
 }
-
 
 // FUNCTION CALLS HTTP REQUEST
 
@@ -68,7 +141,7 @@ function getData() {
     let covidApiEndpoint = 'https://disease.sh/v3/covid-19/countries/?q=yesterday';
 
     httpRequest(covidApiEndpoint, storeData);
-}
+};
 
 //REUSABLE HTTP REQUEST
 
@@ -84,18 +157,18 @@ function httpRequest(url, callback) {
         if (request.status == 200 & request.readyState == 4) {
             callback(responseParsed);
 
-        }
+        };
     };
     request.open('GET', url);
     request.send();
-}
+};
 
 let covidData = ''; // global variable that stores covid data
 
 function storeData(responseParsed) {
     covidData = responseParsed;
     // console.log(covidData);
-}
+};
 
 
 //FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
@@ -114,22 +187,5 @@ loadInternationalData = function () {
     request.send();
 };
 
-//FUNCTION DISPLAYS COUNTRIES
-
-function displayInternationalData(responseParsed) {
-    let internationalSection = document.getElementById('international-section');
-    internationalSection.innerHTML = '';
-
-    const countriesArrayLength = responseParsed.length;
-    // console.log("Total countries", countriesArrayLength);
-
-    for (let i = 0; i < countriesArrayLength; i++) {
-        // console.log(countriesArrayLength);
-        const div = document.createElement("div");
-        div.id = "country" + i;
-        div.innerHTML = responseParsed[i].country;
-        internationalSection.appendChild(div);
-    }
-};
 
 
