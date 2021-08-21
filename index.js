@@ -57,8 +57,6 @@ function displayFilterSearchResults(searchResults) {
     })
 
     // console.log('displayFilterSearch Results', searchResults);
-
-
 }
 
 
