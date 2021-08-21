@@ -9,7 +9,7 @@ destinationInputField.addEventListener('keyup', function (e) {
     e.preventDefault();
     if (e.target.keyCode === 13) {
         // console.log('enter key pressed');
-        document.getElementById('search-button').click()
+        document.getElementById('search-button').click();
     } else {
 
         //FILTERS DATA BASED ON SEARCH INPUT
@@ -21,6 +21,7 @@ destinationInputField.addEventListener('keyup', function (e) {
         console.log(searchResults);
     }
 });
+
 
 //FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
 
