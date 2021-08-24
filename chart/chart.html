@@ -11,13 +11,14 @@
 </head>
 <body>
     <div class="container">
-        <button type="button" class="btn btn-primary btn-sm" onclick="loadChartData(`${chartApiUrl}`)">
+        <input type="text" id="countryTextBox" placeholder="Country">
+        <button type="button" class="btn btn-primary btn-sm" id="submitButton">
         Load Chart Data
         </button>       
     <br>
         <div class="card text-center m5">
             <div class="card header">
-                <h2>Country name</h2>
+                <h2 id="countryName"></h2>
             </div>
                 <canvas id='myChart' width="400" height="400"></canvas>
         </div>
