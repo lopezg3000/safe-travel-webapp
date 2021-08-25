@@ -25,6 +25,7 @@ function handleSearchButtonClick() {
 
     let searchResults = filterCovidData(value);
     let item = searchResults[0]; //should set item to the only item in the array
+
     handleResult(item);
 };
 
