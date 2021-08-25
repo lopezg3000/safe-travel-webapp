@@ -18,7 +18,18 @@ destinationInputField.addEventListener('keyup', function (e) {
     }
 });
 
-//DISPLAY OR NOT FUNCTION
+//FUNCTION GETS THE FIRST ITEM OF THE SEARCH INPUT VALUE AND CONNECTS TO HANDLE RESULT
+function handleSearchButtonClick() {
+    let value = destinationInputField.value;
+    // console.log(value);
+
+    let searchResults = filterCovidData(value);
+    let item = searchResults[0]; //should set item to the only item in the array
+
+    handleResult(item);
+};
+
+//FUNCTION TO DETERMINE IF FILTER SEARCH RESULTS SHOULD BE DISPLAYED
 function displaySwitch(value, callback) {
     let searchResults = filterCovidData(value);
     // console.log(searchResults);
@@ -54,7 +65,7 @@ function displayFilterSearchResults(searchResults) {
         let filteredResultsDiv = document.createElement('div');
         let filteredResultsDivClassesToAdd = ['bg-light', 'p-2', 'm-0'];
         filteredResultsDiv.classList.add(...filteredResultsDivClassesToAdd); //adds all the classes in the array above
-        filteredResultsDiv.addEventListener('click', function () { handleSearchClick(item); }, false); //click event added dynamically to each search result
+        filteredResultsDiv.addEventListener('click', function () { handleResult(item); }, false); //click event added dynamically to each search result
         searchBar.appendChild(filteredResultsDiv);
 
         let filteredResults = document.createElement('h5');
@@ -68,10 +79,10 @@ function displayFilterSearchResults(searchResults) {
 };
 
 //REPLACES INPUT VALUE TO THE NAME OF THE COUNTRY WHEN CLICKED
-function handleSearchClick(item) {
-    console.log('object: ', item);
+//HANDLES THE RESULT WHEN IT IS CLICKED OR WHEN SEARCH BUTTON IS CLICKED
+function handleResult(item) {
+    // console.log('object: ', item);
     let destination = document.getElementById('destination');
-    // destination.value = '';
     destination.value = item.country; //new value for input field
 
     let searchBar = document.getElementById('search-bar');
@@ -130,7 +141,7 @@ function displayCountryCard(item) {
     let deaths = document.createElement('p');
     let deathsClassesToAdd = ['card-text'];
     deaths.classList.add(...deathsClassesToAdd); //adds all the classes in the array above
-    deaths.innerHTML = `Deaths: ${item.deaths}`;
+    deaths.innerHTML = `Recovered: ${item.recovered}`;
     cardBodyDiv.appendChild(deaths);
 
 }
