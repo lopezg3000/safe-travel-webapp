@@ -81,7 +81,7 @@ function displayFilterSearchResults(searchResults) {
 //REPLACES INPUT VALUE TO THE NAME OF THE COUNTRY WHEN CLICKED
 //HANDLES THE RESULT WHEN IT IS CLICKED OR WHEN SEARCH BUTTON IS CLICKED
 function handleResult(item) {
-    // console.log('object: ', item);
+    console.log('object: ', item);
     let destination = document.getElementById('destination');
     destination.value = item.country; //new value for input field
 
@@ -89,6 +89,7 @@ function handleResult(item) {
     searchBar.innerHTML = ''; //erase the previous results
 
     displayCountryCard(item);
+    linkSearchToChart(item); //links search to chart
 
 };
 
@@ -154,6 +155,56 @@ function getData() {
     httpRequest(covidApiEndpoint, storeData);
 };
 
+function linkSearchToChart(item) {
+    // console.log('This is the item passed into display graph function: ', item);
+    let country = item.country;
+    let covidChartApiEndpoint = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=27`;
+
+    httpRequest(covidChartApiEndpoint, displayChart)
+};
+
+function displayChart(responseParsed) {
+    // console.log(responseParsed);
+    let countryNameContainer = document.getElementById('countryName');
+    const data = responseParsed;
+    // console.log(data);
+    const country = data.country;
+    countryNameContainer.innerHTML = country;
+
+    const dates = Object.keys(data.timeline.cases);
+    const cases = Object.values(data.timeline.cases);
+    // console.log(country);
+    // console.log(dates);
+    // console.log(cases);
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: '# of Covid Cases',
+                data: cases,
+                backgroundColor: 'transparent',
+                borderColor: 'red',
+                borderWidth: 4
+            }]
+        },
+        options: {
+            elements: {
+                line: {
+                    tension: 0
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+
 //REUSABLE HTTP REQUEST
 
 function httpRequest(url, callback) {
@@ -181,22 +232,6 @@ function storeData(responseParsed) {
     // console.log(covidData);
 };
 
-
-//FUNCTION CALLS COVID API AND RETURNS A PARSED RESPONSE
-
-loadInternationalData = function () {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        let response = this.response;
-        let responseParsed = JSON.parse(response);
-
-        if (request.status == 200) {
-            displayInternationalData(responseParsed);
-        }
-    };
-    request.open('GET', 'https://disease.sh/v3/covid-19/countries/?q=yesterday');
-    request.send();
-};
 
 
 
