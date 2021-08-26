@@ -4,7 +4,7 @@ const submitButton = document.getElementById('submitButton')
 
 submitButton.addEventListener('click' ,function() {
     const country = countryTextBox.value
-    const chartApiUrl = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=27`
+    const vaccineApiUrl = `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         let response = this.response;
@@ -13,7 +13,7 @@ submitButton.addEventListener('click' ,function() {
             displayChartData(request.responseText);
         }
     };
-    request.open('GET', chartApiUrl);
+    request.open('GET', vaccineApiUrl);
     request.send();
 })
 // loadChartData = function(url) {
@@ -24,12 +24,13 @@ function displayChartData(apiResponse) {
     const data = JSON.parse(apiResponse);
     console.log(data)
     const country = data.country
+    console.log(data.country)
     countryNameContainer.innerHTML = country
-    const dates = Object.keys(data.timeline.cases)
-    const cases = Object.values(data.timeline.cases)
-    console.log(country)
+    console.log(data.timeline)
+    const dates = Object.keys(data.timeline)
+    const numberVaccinated = Object.values(data.timeline)
     console.log(dates)
-    console.log(cases)
+    console.log(numberVaccinated)
     // const countries = data.map(function(elem) {
     //     return elem.country;
     // });
@@ -54,8 +55,8 @@ function displayChartData(apiResponse) {
         data: {
             labels: dates,
             datasets: [{
-                label: '# of Covid Cases',
-                data: cases,
+                label: '# of Vaccinated People',
+                data: numberVaccinated,
                 backgroundColor: 'transparent',
                 borderColor: 'red',
                 borderWidth: 4
