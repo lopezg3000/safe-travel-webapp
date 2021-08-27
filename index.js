@@ -81,7 +81,7 @@ function displayFilterSearchResults(searchResults) {
 //REPLACES INPUT VALUE TO THE NAME OF THE COUNTRY WHEN CLICKED
 //HANDLES THE RESULT WHEN IT IS CLICKED OR WHEN SEARCH BUTTON IS CLICKED
 function handleResult(item) {
-    console.log('object: ', item);
+    // console.log('object: ', item);
     let destination = document.getElementById('destination');
     destination.value = item.country; //new value for input field
 
@@ -113,7 +113,7 @@ function displayCountryCard(item) {
     let cardMainDiv = document.createElement('div');
     let cardMainDivClassesToAdd = ['card', 'mb-3', 'w-25'];
     cardMainDiv.classList.add(...cardMainDivClassesToAdd); //adds all the classes in the array above
-    cardMainDiv.style = 'margin: 20px auto 0'
+    cardMainDiv.style = 'margin: 20px auto 0';
     internationalSection.appendChild(cardMainDiv);
 
     let imageTag = document.createElement('img');
@@ -158,33 +158,61 @@ function getData() {
 function linkSearchToChart(item) {
     // console.log('This is the item passed into display graph function: ', item);
     let country = item.country;
-    let covidChartApiEndpoint = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=27`;
+    let covidChartApiEndpoint = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
 
-    httpRequest(covidChartApiEndpoint, displayChart)
+    httpRequest(covidChartApiEndpoint, displayChartOne);
 };
 
-function displayChart(responseParsed) {
-    // console.log(responseParsed);
-    let countryNameContainer = document.getElementById('countryName');
-    const data = responseParsed;
-    // console.log(data);
-    const country = data.country;
-    countryNameContainer.innerHTML = country;
+//DISPLAYS THE CHART ONE
 
-    const dates = Object.keys(data.timeline.cases);
-    const cases = Object.values(data.timeline.cases);
-    // console.log(country);
-    // console.log(dates);
-    // console.log(cases);
+function displayChartOne(responseParsed) {
+    let chartOneSection = document.getElementById('chart-one-section');
+    chartOneSection.innerHTML = '';
 
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    let data = responseParsed; //responsed parsed stored in data variable
+    let country = data.country;
+    console.log(country);
+    let dates = Object.keys(data.timeline.cases);
+    let cases = Object.values(data.timeline.cases);
+
+    let label = '# of Covid Cases'; //label will be passed to chart
+
+    //creates main div
+    let cardMainDiv = document.createElement('div');
+    let cardMainDivClassesToAdd = ['card', 'text-center', 'm-5'];
+    cardMainDiv.classList.add(...cardMainDivClassesToAdd); //adds all the classes in the array above
+    chartOneSection.appendChild(cardMainDiv);
+
+    //creates card header div
+    let cardHeaderDiv = document.createElement('div');
+    let cardHeaderDivClassesToAdd = ['card', 'header'];
+    cardHeaderDiv.classList.add(...cardHeaderDivClassesToAdd); //adds all the classes in the array above
+    cardMainDiv.appendChild(cardHeaderDiv);
+
+    //creates card header div
+    let header = document.createElement('h2');
+    header.innerHTML = country;
+    cardHeaderDiv.appendChild(header);
+
+    //creates canvas
+    let canvas = document.createElement('canvas');
+    canvas.id = 'canvas-chart-one'
+    canvas.style = 'width: 400; height: 400'
+    cardMainDiv.appendChild(canvas);
+
+    createChart(dates, cases, label, canvas);
+};
+
+function createChart(xVariable, yVariable, label, canvas) {
+    let chart = document.getElementById(canvas.id).getContext('2d');
+
+    new Chart(chart, {
         type: 'line',
         data: {
-            labels: dates,
+            labels: xVariable,
             datasets: [{
-                label: '# of Covid Cases',
-                data: cases,
+                label: label,
+                data: yVariable,
                 backgroundColor: 'transparent',
                 borderColor: 'red',
                 borderWidth: 4
