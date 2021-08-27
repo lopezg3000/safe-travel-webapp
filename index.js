@@ -158,9 +158,11 @@ function getData() {
 function linkSearchToChart(item) {
     // console.log('This is the item passed into display graph function: ', item);
     let country = item.country;
-    let covidChartApiEndpoint = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
+    let covidCasesApiEndpoint = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
+    let covidVaccinationsApiEndpoint = `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`;
 
-    httpRequest(covidChartApiEndpoint, displayChartOne);
+    httpRequest(covidCasesApiEndpoint, displayChartOne);
+    httpRequest(covidVaccinationsApiEndpoint, displayChartTwo);
 };
 
 //DISPLAYS THE CHART ONE
@@ -171,7 +173,7 @@ function displayChartOne(responseParsed) {
 
     let data = responseParsed; //responsed parsed stored in data variable
     let country = data.country;
-    console.log(country);
+    // console.log(country);
     let dates = Object.keys(data.timeline.cases);
     let cases = Object.values(data.timeline.cases);
 
@@ -203,16 +205,58 @@ function displayChartOne(responseParsed) {
     createChart(dates, cases, label, canvas);
 };
 
+//DISPLAYS CHART TWO
+
+function displayChartTwo(responseParsed) {
+    let chartTwoSection = document.getElementById('chart-two-section');
+    chartTwoSection.innerHTML = '';
+
+    let data = responseParsed; //responsed parsed stored in data variable
+    let country = data.country;
+    // console.log(country);
+    let dates = Object.keys(data.timeline)
+    let numberVaccinated = Object.values(data.timeline)
+
+    let label = '# of Vaccinated People'; //label will be passed to chart
+
+    //creates main div
+    let cardMainDiv = document.createElement('div');
+    let cardMainDivClassesToAdd = ['card', 'text-center', 'm-5'];
+    cardMainDiv.classList.add(...cardMainDivClassesToAdd); //adds all the classes in the array above
+    chartTwoSection.appendChild(cardMainDiv);
+
+    //creates card header div
+    let cardHeaderDiv = document.createElement('div');
+    let cardHeaderDivClassesToAdd = ['card', 'header'];
+    cardHeaderDiv.classList.add(...cardHeaderDivClassesToAdd); //adds all the classes in the array above
+    cardMainDiv.appendChild(cardHeaderDiv);
+
+    //creates card header div
+    let header = document.createElement('h2');
+    header.innerHTML = country;
+    cardHeaderDiv.appendChild(header);
+
+    //creates canvas
+    let canvas = document.createElement('canvas');
+    canvas.id = 'canvas-chart-two'
+    canvas.style = 'width: 400; height: 400'
+    cardMainDiv.appendChild(canvas);
+
+    createChart(dates, numberVaccinated, label, canvas);
+};
+
+//REUSABLE FUNCTION THAT CREATES CHART
+
 function createChart(xVariable, yVariable, label, canvas) {
     let chart = document.getElementById(canvas.id).getContext('2d');
 
     new Chart(chart, {
         type: 'line',
         data: {
-            labels: xVariable,
+            labels: xVariable, //passed in x variable
             datasets: [{
-                label: label,
-                data: yVariable,
+                label: label, //passed in label
+                data: yVariable, //passed in y variable
                 backgroundColor: 'transparent',
                 borderColor: 'red',
                 borderWidth: 4
