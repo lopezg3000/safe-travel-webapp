@@ -178,6 +178,7 @@ function displayChartOne(responseParsed) {
     let cases = Object.values(data.timeline.cases);
 
     let label = '# of Covid Cases'; //label will be passed to chart
+    let borderColor = '#91c378';
 
     //creates main div
     let cardMainDiv = document.createElement('div');
@@ -202,7 +203,7 @@ function displayChartOne(responseParsed) {
     canvas.style = 'width: 400; height: 400'
     cardMainDiv.appendChild(canvas);
 
-    createChart(dates, cases, label, canvas);
+    createChart(dates, cases, label, canvas, borderColor);
 };
 
 //DISPLAYS CHART TWO
@@ -218,6 +219,7 @@ function displayChartTwo(responseParsed) {
     let numberVaccinated = Object.values(data.timeline)
 
     let label = '# of Vaccinated People'; //label will be passed to chart
+    let borderColor = '#67a8e5';
 
     //creates main div
     let cardMainDiv = document.createElement('div');
@@ -242,12 +244,12 @@ function displayChartTwo(responseParsed) {
     canvas.style = 'width: 400; height: 400'
     cardMainDiv.appendChild(canvas);
 
-    createChart(dates, numberVaccinated, label, canvas);
+    createChart(dates, numberVaccinated, label, canvas, borderColor);
 };
 
 //REUSABLE FUNCTION THAT CREATES CHART
 
-function createChart(xVariable, yVariable, label, canvas) {
+function createChart(xVariable, yVariable, label, canvas, borderColor) {
     let chart = document.getElementById(canvas.id).getContext('2d');
 
     new Chart(chart, {
@@ -258,7 +260,7 @@ function createChart(xVariable, yVariable, label, canvas) {
                 label: label, //passed in label
                 data: yVariable, //passed in y variable
                 backgroundColor: 'transparent',
-                borderColor: 'red',
+                borderColor: borderColor,
                 borderWidth: 4
             }]
         },
