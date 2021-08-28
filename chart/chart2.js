@@ -58,7 +58,7 @@ function displayChartData(apiResponse) {
                 label: '# of Vaccinated People',
                 data: numberVaccinated,
                 backgroundColor: 'transparent',
-                borderColor: 'red',
+                borderColor: '#67a8e5',
                 borderWidth: 4
             }]
         },
