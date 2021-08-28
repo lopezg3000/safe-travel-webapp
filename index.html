@@ -20,30 +20,36 @@
 
     <!--------------------------NAVIGATION BAR------------------------------------->
     <div class="container">
-        <nav class ="navbar fixed-top navbar-light" style="background-color:#545454;">
-            <div class = "container-lg">
-                <a class ="navbar-brand"></a> 
+        <nav class="navbar fixed-top navbar-light" style="background-color:#545454;">
+            <div class="container-lg">
+                <a class="navbar-brand"></a>
                 <div class="container">
                     <img src="images\greylogo.png" class="img-fluid" alt="logo" width="30%" height="30%">
                 </div>
                 <div class="container">
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html" class="hover"><h5>Home</h5></a>
-                       </li>
-                        <li class="nav-item">
-                             <a class="nav-link" href="cr.html" class="hover"><h5>Creative Resources</h5></a>
+                            <a class="nav-link active" aria-current="page" href="index.html" class="hover">
+                                <h5>Home</h5>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cu.html" class="hover"><h5>Contact Us</h5></a>
-                         </li>
+                            <a class="nav-link" href="cr.html" class="hover">
+                                <h5>Creative Resources</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cu.html" class="hover">
+                                <h5>Contact Us</h5>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 </head>
-       
+
 </head>
 
 <body onload='getData()'>
@@ -98,13 +104,12 @@
 
     </section>
 
-    <!-------------------      CHART 1 SECTION          ----------------------->
+    <!-------------------      CHARTS SECTION          ----------------------->
+    <section class='d-flex justify-content-center m-auto' style='max-width: 1440px'>
+        <div id='chart-one-section' class='charts' style='width: 40%'></div>
+        <div id='chart-two-section' class='charts' style='width: 40%'></div>
+    </section>
 
-    <section id='chart-one-section' class='charts'></section>
-
-    <!-------------------      CHART 2 SECTION          ----------------------->
-
-    <section id='chart-two-section' class='charts'></section>
 
 
     <script src='./index.js'></script>
