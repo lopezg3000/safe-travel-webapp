@@ -8,43 +8,42 @@
 
     <link rel='stylesheet' href='./index.css'>
     <link rel="stylesheet" href="./chart.css">
-    </link>
 
+    <!---------------------------------BOOTSTRAP----------------------------------------------->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Safe Travel</title>
 
 
     <!--------------------------NAVIGATION BAR------------------------------------->
     <div class="container">
-        <nav class="navbar fixed-top navbar-dark bg-dark">
-            <div class="container-md">
-                <a class="navbar-brand" href="">
-                    <h1>Safe Travel</h1>
-                </a>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <h4>Home</h4>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <h4>Creative Resources</h4>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <h4>Contact Us</h4>
-                        </a>
-                    </li>
-                </ul>
+        <nav class ="navbar fixed-top navbar-light" style="background-color:#545454;">
+            <div class = "container-lg">
+                <a class ="navbar-brand"></a> 
+                <div class="container">
+                    <img src="images\greylogo.png" class="img-fluid" alt="logo" width="30%" height="30%">
+                </div>
+                <div class="container">
+                    <ul class="nav justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html" class="hover"><h5>Home</h5></a>
+                       </li>
+                        <li class="nav-item">
+                             <a class="nav-link" href="cr.html" class="hover"><h5>Creative Resources</h5></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cu.html" class="hover"><h5>Contact Us</h5></a>
+                         </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>
+</head>
+       
 </head>
 
 <body onload='getData()'>
@@ -101,11 +100,11 @@
 
     <!-------------------      CHART 1 SECTION          ----------------------->
 
-    <section id='chart-one-section'></section>
+    <section id='chart-one-section' class='charts'></section>
 
     <!-------------------      CHART 2 SECTION          ----------------------->
 
-    <section id='chart-two-section'></section>
+    <section id='chart-two-section' class='charts'></section>
 
 
     <script src='./index.js'></script>
