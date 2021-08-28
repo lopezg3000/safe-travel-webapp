@@ -57,7 +57,7 @@ function displayChartData(apiResponse) {
                 label: 'Total Covid Cases',
                 data: cases,
                 backgroundColor: 'transparent',
-                borderColor: 'red',
+                borderColor: '#91c378',
                 borderWidth: 4
             }]
         },
