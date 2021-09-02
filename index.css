@@ -36,7 +36,7 @@ margin-bottom: 25%;
 h6{
     text-align: center;
     color:white;
-    }
+}
 .pcontainer{
 margin-top:16%;
 margin-left:11%;
@@ -44,16 +44,19 @@ margin-right:11%;
 }
 
 /*************Contact Us**********/
-.cucontainer{
-display: flex;
-grid-template-columns: auto auto auto;
-margin-top:16%;
-margin-left:12%;
-margin-right: 12%;
-background-color:#545454;
+.cuParagraph{
+    margin-top:16%
 }
-.cucontainer > div{
-background-color: rgb(122, 163, 179);
+.cucontainer{
+    display: flex;
+    grid-template-rows: auto;
+    margin-top:5%; /*removed left and right margins*/
+    background-color:#545454;
+}
+.cucontainer > div { 
+    background-color: rgb(122, 163, 179);
+    font-size: medium !important;
+    grid-template-columns: auto auto auto;
 }
 .img-fluid-rounded-start{
     width: auto;
@@ -62,27 +65,33 @@ background-color: rgb(122, 163, 179);
 }
 h4{
 color:#545454;
+font-size: smaller;
 }
-/*Creative Resources*/
+/*****************Creative Resources****************/
+/*.crParagraph{
+    margin-top:16% !important;
+    color: white;
+    font-size: small !important;
+    text-align: center !important;
+}*/
 .crgrid {
-margin-top:16%;  
-margin-left:42%;
-margin-right:11%;
+    display:flex;
+    flex-direction: column !important;
+    align-items: center;
+    margin-top:20%;
+    min-height: 100vh;
 }
 .card-img-top{
-width: 100%;
-height: 15vw;
-object-fit: cover;
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
 }
-
 .icons:hover{
 color:orange;
 }
+
 /**********Charts***********/
-#chartContainer{
-display:flex;
-justify-content: center;
-}
+
 #chart-one-section{
 height:30%;
 width:30%;
@@ -94,6 +103,111 @@ height:30%;
 width:30%;
 background-color:#545454!important;
 }
+
+/******Media Query-For Mobile Phones**********/
+@media only screen and (max-width: 768px) {
+    body{
+      width:100%;
+      font-size: 10px !important;
+    }
+ 
+    /********Media Query-For Mobile Phone- Navigation Bar********/
+    h5{
+        font-size:small !important;
+    }
+    h5:hover{
+        color: orange;
+    }
+    /**********Media Query-For Mobile Phone - Search Bar***********/
+    .search-bar-wrapper {
+        width: 300px; 
+        height:85px;
+        background-color: rgb(107, 179, 107); 
+        border-radius: 10px;
+    }
+    .search-button {
+        background-color: #0F5474 !important;
+        border-color: #0F5474 !important;
+        font-size: smaller !important;
+    }
+    #destination{
+        font-size: smaller !important;
+    }
+    h3{
+        font-size: medium !important;
+    }
+
+    /************Media Query-For Mobile Phone-Chart****************************/
+        
+    /*.mobile{
+        display:grid !important;
+        grid-template-rows: auto !important;
+    }
+    
+    #chart-one-section{
+        width:70% !important;
+        background-color:#545454!important;
+    }
+        
+    #chart-two-section{
+        width: 70% !important;
+        background-color:#545454!important;
+    }
+    /*************Media Query-For Mobile Phone-About Us*******/
+    .pcontainer{
+        margin-top:30%;
+    }
+    h6{
+        font-size:xx-small !important;
+    }
+    /**************Media Query for Contact Us******************/
+    .cucontainer{
+        display: flex !important;
+        grid-template-rows: auto !important;
+        margin-top:40%;/*increased top margin*/
+        /*margin-left:12%;
+        margin-right: 12%;*/
+        background-color:#545454;
+    }
+    .cucontainer > div{
+        background-color: rgb(122, 163, 179);
+        grid-template-rows: auto auto auto !important;
+        font-size: xx-small !important;
+    }
+    .img-fluid-rounded-start {
+        width: 90%;
+        height: 90%;
+        object-fit:cover !important;
+    }
+    h4{
+        color:#545454;
+        font-size: small !important;
+    }
+
+    /*****************Media Query - Creative Resources****************/
+    .crParagraph{
+        margin-top: 30%;
+        color: white;
+        font-size: small !important;
+    }
+    .crgrid {
+        display:flex;
+        flex-direction: column !important;
+        align-items: center;
+        margin-top:5%;
+        min-height: 100vh;
+    }
+    .card-img-top{
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+    }
+    .icons:hover{
+    color:orange;
+    }
+}
+
+    
 
 
 
